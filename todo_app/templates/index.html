@@ -18,4 +18,14 @@
       </ul>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Create Item</h2>
+      <form action="/items" method="post">
+        <label for="title">Enter item title: </label>
+        <input type="text" name="title" id="title" required>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
 {% endblock %}
