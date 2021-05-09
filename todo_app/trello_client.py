@@ -8,6 +8,19 @@ BOARD_ID = os.getenv('ITEMS_BOARD_ID')
 TODO_LIST_ID = os.getenv('TODO_LIST_ID')
 DONE_LIST_ID = os.getenv('DONE_LIST_ID')
 
+def get_cards_from_todo_list():
+    return get_cards_from_list(TODO_LIST_ID)
+
+def get_cards_from_done_list():
+    return get_cards_from_list(DONE_LIST_ID)
+
+def get_cards_from_list(list_id):
+    url = f"https://trello.com/1/lists/{list_id}/cards?key={TRELLO_API_KEY}&token={TRELLO_API_TOKEN}"
+    query = {"key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN}
+    response = requests.request("GET", url, params=query)
+    response.raise_for_status()
+    return response.json()
+
 def get_cards_from_board_items():
     return get_cards_from_board(BOARD_ID)
 
@@ -31,6 +44,9 @@ def create_card(list_id, card_name, description=None):
 
 def move_card_to_done_list(id):
     return move_card_to_list(DONE_LIST_ID, id)
+
+def move_card_to_todo_list(id):
+    return move_card_to_list(TODO_LIST_ID, id)
 
 def move_card_to_list(list_id, id):
     url = f"https://api.trello.com/1/cards/{id}"
