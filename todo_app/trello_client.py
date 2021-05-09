@@ -8,8 +8,6 @@ BOARD_ID = os.getenv('ITEMS_BOARD_ID')
 TODO_LIST_ID = os.getenv('TODO_LIST_ID')
 DONE_LIST_ID = os.getenv('DONE_LIST_ID')
 
-print(TRELLO_API_KEY, TRELLO_API_TOKEN, BOARD_ID, TODO_LIST_ID, DONE_LIST_ID)
-
 def get_cards_from_board_items():
     return get_cards_from_board(BOARD_ID)
 
@@ -31,4 +29,13 @@ def create_card(list_id, card_name, description=None):
     card_id = response.json()["id"]
     return card_id
 
+def move_card_to_done_list(id):
+    return move_card_to_list(DONE_LIST_ID, id)
 
+def move_card_to_list(list_id, id):
+    url = f"https://api.trello.com/1/cards/{id}"
+    headers = {"Accept": "application/json"}
+    query = {"key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN, "idList":list_id}
+    response = requests.request("PUT", url, headers=headers, params=query)
+    response.raise_for_status()
+    return response.json()
