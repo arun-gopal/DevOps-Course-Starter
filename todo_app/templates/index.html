@@ -28,11 +28,9 @@
       {% for item in todo_items %}
         <div class="card" style="margin-bottom:10px">
           <div class="card-header">
-            {{ item.name }}
+            {{ item.id }}
           </div>
           <div class="card-body">
-              <h5 class="card-title">{{ item.id }}</h5>
-              <p class="card-text">{{ item.idList }}</p>
               <p class="card-text">{{ item.name }}</p>
               <form class="form-inline" action="/items/update" method="post">
                 <input type="text" name="id" value="{{item.id}}" hidden>  
@@ -47,11 +45,9 @@
       {% for item in done_items %}
         <div class="card text-white bg-success" style="margin-bottom:10px">
           <div class="card-header">
-            {{ item.name }}
+            {{ item.id }}
           </div>
           <div class="card-body">
-              <h5 class="card-title">{{ item.id }}</h5>
-              <p class="card-text">{{ item.idList }}</p>
               <p class="card-text">{{ item.name }}</p>
               <form class="form-inline" action="/items/reset" method="post">
                 <input type="text" name="id" value="{{item.id}}" hidden>  
