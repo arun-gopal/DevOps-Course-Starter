@@ -13,7 +13,8 @@ def index():
 @app.route('/items', methods=['POST'])
 def create():
     title = request.form.get('title')
-    create_card_on_todo_list(title)
+    description = request.form.get('description')
+    create_card_on_todo_list(title, description)
     return redirect("/", code=303)
 
 @app.route('/items/update', methods=['POST'])
