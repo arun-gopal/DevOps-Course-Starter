@@ -9,25 +9,38 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Create Item</h2>
-      <form action="/items" method="post">
-        <label for="title">Enter item title: </label>
-        <input type="text" name="title" id="title" required>
-        <input type="submit" value="Submit">
+      <form action="/items" method="post" class="form-inline">
+        <div class="form-group mb-2">
+          <label for="title">Title </label>
+          <input type="text" name="title" id="title" required>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="description">Description</label>
+          <input type="text" name="description" id="description" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
       </form>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
-      <ul class="list-group mb-4">
-        {% for item in items %}
-          <li>{{ item.id }} - {{ item.idList }} - {{ item.name }}</li>
-          <form action="/items/update" method="post">
-            <input type="text" name="id" value="{{item.id}}" hidden>  
-            <button type="submit">Update</button>
-          </form>
-        {% endfor %}
-      </ul>
+      {% for item in items %}
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-header">
+            {{ item.name }}
+          </div>
+          <div class="card-body">
+              <h5 class="card-title">{{ item.id }}</h5>
+              <p class="card-text">{{ item.idList }}</p>
+              <p class="card-text">{{ item.name }}</p>
+              <form class="form-inline" action="/items/update" method="post">
+                <input type="text" name="id" value="{{item.id}}" hidden>  
+                <button class="btn btn-primary" type="submit">Update</button>
+              </form>
+          </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}
