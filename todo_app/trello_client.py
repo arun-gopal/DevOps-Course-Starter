@@ -21,16 +21,6 @@ def get_cards_from_list(list_id):
     response.raise_for_status()
     return response.json()
 
-def get_cards_from_board_items():
-    return get_cards_from_board(BOARD_ID)
-
-def get_cards_from_board(board_id):
-    url = f"https://api.trello.com/1/boards/{board_id}/cards"
-    query = {"key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN}
-    response = requests.request("GET", url, params=query)
-    response.raise_for_status()
-    return response.json()
-
 def create_card_on_todo_list(card_name, description=None):
     return create_card(TODO_LIST_ID, card_name, description)
 
