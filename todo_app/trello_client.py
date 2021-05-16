@@ -19,7 +19,10 @@ def get_cards_from_list(list_id):
     query = {"key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN}
     response = requests.request("GET", url, params=query)
     response.raise_for_status()
-    return response.json()
+    items = []
+    for item in response.json():
+        items.append(Item(item["id"], item["name"], item["desc"]))
+    return items
 
 def create_card_on_todo_list(card_name, description=None):
     return create_card(TODO_LIST_ID, card_name, description)
@@ -29,8 +32,7 @@ def create_card(list_id, card_name, description=None):
     query = {"name": card_name, "desc": description,"idList": list_id, "key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN}
     response = requests.request("POST", url, params=query)
     response.raise_for_status()
-    card_id = response.json()["id"]
-    return card_id
+    return Item(response.json()["id"], response.json()["name"], response.json()["desc"])
 
 def move_card_to_done_list(id):
     return move_card_to_list(DONE_LIST_ID, id)
@@ -44,4 +46,11 @@ def move_card_to_list(list_id, id):
     query = {"key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN, "idList":list_id}
     response = requests.request("PUT", url, headers=headers, params=query)
     response.raise_for_status()
-    return response.json()
+    return Item(response.json()["id"], response.json()["name"], response.json()["desc"])
+
+class Item:
+
+  def __init__(self, identity, name, desc):
+    self.identity = identity  
+    self.name = name
+    self.desc = desc
