@@ -57,3 +57,12 @@ class Item:
     self.name = name
     self.desc = desc
     self.last_modified = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%S.%fZ").date()
+
+class ItemViewModel:
+
+    def __init__(self, items):
+        self._items = items
+
+    @property
+    def items(self):
+        return self._items
