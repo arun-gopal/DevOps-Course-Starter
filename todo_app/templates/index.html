@@ -43,21 +43,57 @@
     </div>
     <div class="col-md-6">
       <h2>Done</h2>
-      {% for item in itemsModel.done_items %}
-        <div class="card text-white bg-success" style="margin-bottom:10px">
-          <div class="card-header">
-            last modified: {{ item.last_modified }}
+      {% if itemsModel.should_show_all_done_items: %}
+        {% for item in itemsModel.done_items %}
+          <div class="card text-white bg-success" style="margin-bottom:10px">
+            <div class="card-header">
+              last modified: {{ item.last_modified }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ item.name }}</p>
+                <p class="card-text">{{ item.desc }}</p>
+                <form class="form-inline" action="/items/reset" method="post">
+                  <input type="text" name="id" value="{{item.identity}}" hidden>  
+                  <button class="btn btn-light" type="submit">Reset</button>
+                </form>
+            </div>
           </div>
-          <div class="card-body">
-              <p class="card-text">{{ item.name }}</p>
-              <p class="card-text">{{ item.desc }}</p>
-              <form class="form-inline" action="/items/reset" method="post">
-                <input type="text" name="id" value="{{item.identity}}" hidden>  
-                <button class="btn btn-light" type="submit">Reset</button>
-              </form>
+        {% endfor %}
+      {% else: %}
+        {% for item in itemsModel.recent_done_items %}
+          <div class="card text-white bg-success" style="margin-bottom:10px">
+            <div class="card-header">
+              last modified: {{ item.last_modified }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ item.name }}</p>
+                <p class="card-text">{{ item.desc }}</p>
+                <form class="form-inline" action="/items/reset" method="post">
+                  <input type="text" name="id" value="{{item.identity}}" hidden>  
+                  <button class="btn btn-light" type="submit">Reset</button>
+                </form>
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+        <details>
+          <summary>Show older items</summary>
+          {% for item in itemsModel.older_done_items %}
+          <div class="card text-white bg-success" style="margin-bottom:10px">
+            <div class="card-header">
+              last modified: {{ item.last_modified }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ item.name }}</p>
+                <p class="card-text">{{ item.desc }}</p>
+                <form class="form-inline" action="/items/reset" method="post">
+                  <input type="text" name="id" value="{{item.identity}}" hidden>  
+                  <button class="btn btn-light" type="submit">Reset</button>
+                </form>
+            </div>
+          </div>
+        {% endfor %}
+        </details>
+      {% endif%}
     </div>
   </div>
-{% endblock %}
+{% endblock%}

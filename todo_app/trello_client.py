@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 TRELLO_API_KEY = os.getenv('TRELLO_API_KEY')
@@ -83,3 +83,37 @@ class ItemViewModel:
             if item.list_name.upper() == "DONE":
                 items_done.append(item)
         return items_done
+
+    @property
+    def count_of_done_items(self):
+        self._n_done = len(self.done_items)
+        return self._n_done
+
+    @property
+    def recent_done_items(self):
+        items_done=[]
+        for item in self.done_items:
+            if item.last_modified >= datetime.today().date():
+                items_done.append(item)
+        return items_done
+    
+    @property
+    def count_of_recent_done_items(self):
+        self._n_recent_done = len(self.recent_done_items)
+        return self._n_recent_done 
+
+    @property
+    def older_done_items(self):
+        items_done=[]
+        for item in self.done_items:
+            if item.last_modified < datetime.today().date():
+                items_done.append(item)
+        return items_done
+    
+    @property
+    def should_show_all_done_items(self):
+        if (self.count_of_done_items <=5):
+            return True
+        else:
+            return False
+    
