@@ -60,3 +60,18 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Testing this app
+
+Before you test this app you need to get your environment ready. To do that install pytest:
+```bash
+poetry add pytest
+```
+to run the tests, make sure you are in the todo_app folder:
+```bash
+cd .\todo_app\
+```
+And run the tests:
+```bash
+poetry run pytest
+```

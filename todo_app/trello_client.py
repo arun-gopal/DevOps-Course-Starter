@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 TRELLO_API_KEY = os.getenv('TRELLO_API_KEY')
