@@ -34,6 +34,13 @@ def test_items():
     assert result != None
     assert len(result) == 10
 
+def test_items_empty():
+    items = []
+    viewmodel = ItemViewModel(items)
+    result = viewmodel.items
+    assert result != None
+    assert len(result) == 0
+
 def test_todo_items():
     viewmodel = ItemViewModel(get_items())
     result = viewmodel.to_do_items
