@@ -5,8 +5,8 @@ from datetime import datetime
 
 def get_cards_from_all_lists():
     items = []
-    items.extend(get_cards_from_list("DONE", os.getenv('DONE_LIST_ID')))
     items.extend(get_cards_from_list("TODO", os.getenv('TODO_LIST_ID')))
+    items.extend(get_cards_from_list("DONE", os.getenv('DONE_LIST_ID')))
     return items 
 
 def get_cards_from_list(list_name, list_id):
