@@ -22,10 +22,11 @@ def test_app():
        thread = Thread(target=lambda: application.run(use_reloader=False))
        thread.daemon = True
        thread.start()
-       yield app
+       yield application
 
        #Delete the test board
        thread.join(1)
+       time.sleep(5)
        delete_trello_board(board_id)
 
 @pytest.fixture(scope="module")
@@ -37,12 +38,6 @@ def testDriver(test_app, driver):
     driver.get('http://127.0.0.1:5000/')
     assert driver.title == 'To-Do App'
     
-def test_createTask(test_app, driver):
-    testDriver(test_app, driver)
-    driver.find_element_by_id("title").send_keys("Selenium is flaky")
-    driver.find_element_by_id("submit").click()
-    time.sleep(5)
-
 def create_trello_board():
     API_KEY = os.getenv('TRELLO_API_KEY')
     TOKEN = os.getenv('TRELLO_API_TOKEN')
@@ -60,6 +55,21 @@ def delete_trello_board(id):
     query = {"key": API_KEY, "token": TOKEN}
     requests.request("DELETE", url, params=query)
     print("Test board deleted, id=" + id)
+
+def test_createTask(test_app, driver):
+    testDriver(test_app, driver)
+    driver.find_element_by_id("title").send_keys("Selenium is flaky")
+    driver.find_element_by_id("description").send_keys("Selenium is flaky")
+    driver.find_element_by_id("submit").click()
+    time.sleep(5)
+
+def test_start_task(test_app, driver):
+    driver.find_element_by_xpath("//*[contains(text(),'Start')]").click()
+    time.sleep(5)
+
+def test_reset_task(test_app, driver):
+    driver.find_element_by_xpath("//*[contains(text(),'Reset')]").click()
+    time.sleep(5)
 
 def get_list_id_for_board(board_id, list_name):
     print("Searching for " + list_name)

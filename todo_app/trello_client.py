@@ -3,22 +3,15 @@ import requests
 import json
 from datetime import datetime
 
-
-TRELLO_API_KEY = os.getenv('TRELLO_API_KEY')
-TRELLO_API_TOKEN = os.getenv('TRELLO_API_TOKEN')
-BOARD_ID = os.getenv('ITEMS_BOARD_ID')
-TODO_LIST_ID = os.getenv('TODO_LIST_ID')
-DONE_LIST_ID = os.getenv('DONE_LIST_ID')
-
 def get_cards_from_all_lists():
     items = []
-    items.extend(get_cards_from_list("DONE", DONE_LIST_ID))
-    items.extend(get_cards_from_list("TODO", TODO_LIST_ID))
+    items.extend(get_cards_from_list("DONE", os.getenv('DONE_LIST_ID')))
+    items.extend(get_cards_from_list("TODO", os.getenv('TODO_LIST_ID')))
     return items 
 
 def get_cards_from_list(list_name, list_id):
-    url = f"https://trello.com/1/lists/{list_id}/cards?key={TRELLO_API_KEY}&token={TRELLO_API_TOKEN}"
-    query = {"key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN}
+    url = f"https://trello.com/1/lists/{list_id}/cards"
+    query = {"key": os.getenv('TRELLO_API_KEY'), "token": os.getenv('TRELLO_API_TOKEN')}
     response = requests.request("GET", url, params=query)
     response.raise_for_status()
     items = []
@@ -27,25 +20,25 @@ def get_cards_from_list(list_name, list_id):
     return items
 
 def create_card_on_todo_list(card_name, description=None):
-    return create_card("TODO", TODO_LIST_ID, card_name, description)
+    return create_card("TODO", os.getenv('TODO_LIST_ID'), card_name, description)
 
 def create_card(list_name, list_id, card_name, description=None):
     url = f"https://api.trello.com/1/cards"
-    query = {"name": card_name, "desc": description,"idList": list_id, "key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN}
+    query = {"name": card_name, "desc": description,"idList": list_id, "key": os.getenv('TRELLO_API_KEY'), "token": os.getenv('TRELLO_API_TOKEN')}
     response = requests.request("POST", url, params=query)
     response.raise_for_status()
     return Item(response.json()["id"], response.json()["name"], response.json()["desc"], response.json()["dateLastActivity"], list_name)
 
 def move_card_to_done_list(id):
-    return move_card_to_list("DONE", DONE_LIST_ID, id)
+    return move_card_to_list("DONE", os.getenv('DONE_LIST_ID'), id)
 
 def move_card_to_todo_list(id):
-    return move_card_to_list("TODO", TODO_LIST_ID, id)
+    return move_card_to_list("TODO", os.getenv('TODO_LIST_ID'), id)
 
 def move_card_to_list(list_name, list_id, id):
     url = f"https://api.trello.com/1/cards/{id}"
     headers = {"Accept": "application/json"}
-    query = {"key": TRELLO_API_KEY, "token": TRELLO_API_TOKEN, "idList":list_id}
+    query = {"key": os.getenv('TRELLO_API_KEY'), "token": os.getenv('TRELLO_API_TOKEN'), "idList":list_id}
     response = requests.request("PUT", url, headers=headers, params=query)
     response.raise_for_status()
     return Item(response.json()["id"], response.json()["name"], response.json()["desc"], response.json()["dateLastActivity"], list_name)

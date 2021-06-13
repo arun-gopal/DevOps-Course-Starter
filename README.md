@@ -75,3 +75,6 @@ And run the tests:
 ```bash
 poetry run pytest
 ```
+```bash
+poetry run pytest tests_e2e
+```
