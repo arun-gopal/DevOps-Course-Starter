@@ -15,17 +15,19 @@ def client():
 def test_index_page(mock_get, client):
     mock_get.side_effect = mock_get_cards
     response = client.get('/')
-    print(response.data.decode())
     assert response.status_code == 200
 
-def mock_get_cards(url, params=None):
+def mock_get_cards(url, params):
 
-    if url == f'https://trello.com/1/lists/todo_list_id/cards?key=test_key&token=test_token': 
+    TODO_LIST_ID = os.getenv('TODO_LIST_ID')
+    DONE_LIST_ID = os.getenv('DONE_LIST_ID')
+
+    if url == f'https://trello.com/1/lists/{TODO_LIST_ID}/cards': 
         response = Mock()
         response.json.return_value = sample_trello_cards_response()
         return response
 
-    if url == f'https://trello.com/1/lists/done_list_id/cards?key=test_key&token=test_token': 
+    if url == f'https://trello.com/1/lists/{DONE_LIST_ID}/cards': 
         response = Mock()
         response.json.return_value = sample_trello_cards_response()
         return response
@@ -36,24 +38,24 @@ def sample_trello_cards_response():
     return [
     {
         "id": "60969ef0795a5e4c0e063550",
-        "checkItemStates": null,
-        "closed": false,
+        "checkItemStates": None,
+        "closed": False,
         "dateLastActivity": "2021-06-13T13:27:13.664Z",
         "desc": "",
-        "descData": null,
-        "dueReminder": null,
+        "descData": None,
+        "dueReminder": None,
         "idBoard": "60969ec0352fff8f55154c9b",
         "idList": "60969ec0352fff8f55154c9c",
         "idMembersVoted": [],
         "idShort": 1,
-        "idAttachmentCover": null,
+        "idAttachmentCover": None,
         "idLabels": [],
-        "manualCoverAttachment": false,
+        "manualCoverAttachment": False,
         "name": "Testing",
         "pos": 65535,
         "shortLink": "icDeyrgc",
-        "isTemplate": false,
-        "cardRole": null,
+        "isTemplate": False,
+        "cardRole": None,
         "badges": {
             "attachmentsByType": {
                 "trello": {
@@ -61,59 +63,59 @@ def sample_trello_cards_response():
                     "card": 0
                 }
             },
-            "location": false,
+            "location": False,
             "votes": 0,
-            "viewingMemberVoted": false,
-            "subscribed": false,
+            "viewingMemberVoted": False,
+            "subscribed": False,
             "fogbugz": "",
             "checkItems": 0,
             "checkItemsChecked": 0,
-            "checkItemsEarliestDue": null,
+            "checkItemsEarliestDue": None,
             "comments": 0,
             "attachments": 0,
-            "description": false,
-            "due": null,
-            "dueComplete": false,
-            "start": null
+            "description": False,
+            "due": None,
+            "dueComplete": False,
+            "start": None
         },
-        "dueComplete": false,
-        "due": null,
+        "dueComplete": False,
+        "due": None,
         "idChecklists": [],
         "idMembers": [],
         "labels": [],
         "shortUrl": "https://trello.com/c/icDeyrgc",
-        "start": null,
-        "subscribed": false,
+        "start": None,
+        "subscribed": False,
         "url": "https://trello.com/c/icDeyrgc/1-testing",
         "cover": {
-            "idAttachment": null,
-            "color": null,
-            "idUploadedBackground": null,
+            "idAttachment": None,
+            "color": None,
+            "idUploadedBackground": None,
             "size": "normal",
             "brightness": "dark",
-            "idPlugin": null
+            "idPlugin": None
         }
     },
     {
         "id": "60969f1f22fb795aa3a9a676",
-        "checkItemStates": null,
-        "closed": false,
+        "checkItemStates": None,
+        "closed": False,
         "dateLastActivity": "2021-06-13T13:27:16.948Z",
         "desc": "",
-        "descData": null,
-        "dueReminder": null,
+        "descData": None,
+        "dueReminder": None,
         "idBoard": "60969ec0352fff8f55154c9b",
         "idList": "60969ec0352fff8f55154c9c",
         "idMembersVoted": [],
         "idShort": 5,
-        "idAttachmentCover": null,
+        "idAttachmentCover": None,
         "idLabels": [],
-        "manualCoverAttachment": false,
+        "manualCoverAttachment": False,
         "name": "Another Test",
         "pos": 65535,
         "shortLink": "ZUK5nFYH",
-        "isTemplate": false,
-        "cardRole": null,
+        "isTemplate": False,
+        "cardRole": None,
         "badges": {
             "attachmentsByType": {
                 "trello": {
@@ -121,37 +123,37 @@ def sample_trello_cards_response():
                     "card": 0
                 }
             },
-            "location": false,
+            "location": False,
             "votes": 0,
-            "viewingMemberVoted": false,
-            "subscribed": false,
+            "viewingMemberVoted": False,
+            "subscribed": False,
             "fogbugz": "",
             "checkItems": 0,
             "checkItemsChecked": 0,
-            "checkItemsEarliestDue": null,
+            "checkItemsEarliestDue": None,
             "comments": 0,
             "attachments": 0,
-            "description": false,
-            "due": null,
-            "dueComplete": false,
-            "start": null
+            "description": False,
+            "due": None,
+            "dueComplete": False,
+            "start": None
         },
-        "dueComplete": false,
-        "due": null,
+        "dueComplete": False,
+        "due": None,
         "idChecklists": [],
         "idMembers": [],
         "labels": [],
         "shortUrl": "https://trello.com/c/ZUK5nFYH",
-        "start": null,
-        "subscribed": false,
+        "start": None,
+        "subscribed": False,
         "url": "https://trello.com/c/ZUK5nFYH/5-another-test",
         "cover": {
-            "idAttachment": null,
-            "color": null,
-            "idUploadedBackground": null,
+            "idAttachment": None,
+            "color": None,
+            "idUploadedBackground": None,
             "size": "normal",
             "brightness": "dark",
-            "idPlugin": null
+            "idPlugin": None
         }
     }
 ]
