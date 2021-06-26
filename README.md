@@ -63,10 +63,6 @@ Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser
 
 ## Testing this app
 
-Before you test this app you need to get your environment ready. To do that install pytest:
-```bash
-poetry add pytest
-```
 to run the tests, make sure you are in the todo_app folder:
 ```bash
 cd .\todo_app\
@@ -75,6 +71,7 @@ And run the tests:
 ```bash
 poetry run pytest
 ```
+For Selenium UI tests, download Firefox and matching version of the Gecko Driver executable and place it in the root of the project. Selenium uses this under the hood to run tests on the browser.
 ```bash
 poetry run pytest tests_e2e
 ```
