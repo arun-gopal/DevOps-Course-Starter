@@ -32,6 +32,7 @@ def test_app():
 @pytest.fixture(scope="module")
 def driver():
     with webdriver.Firefox() as driver:
+        driver.implicitly_wait(5)
         yield driver
 
 def testDriver(test_app, driver):
@@ -56,21 +57,6 @@ def delete_trello_board(id):
     requests.request("DELETE", url, params=query)
     print("Test board deleted, id=" + id)
 
-def test_createTask(test_app, driver):
-    testDriver(test_app, driver)
-    driver.find_element_by_id("title").send_keys("Selenium is flaky")
-    driver.find_element_by_id("description").send_keys("Selenium is flaky")
-    driver.find_element_by_id("submit").click()
-    time.sleep(5)
-
-def test_start_task(test_app, driver):
-    driver.find_element_by_xpath("//*[contains(text(),'Start')]").click()
-    time.sleep(5)
-
-def test_reset_task(test_app, driver):
-    driver.find_element_by_xpath("//*[contains(text(),'Reset')]").click()
-    time.sleep(5)
-
 def get_list_id_for_board(board_id, list_name):
     print("Searching for " + list_name)
     API_KEY = os.getenv('TRELLO_API_KEY')
@@ -83,3 +69,16 @@ def get_list_id_for_board(board_id, list_name):
             list_id = item["id"]
     print("Found " + list_id)        
     return list_id
+    
+def test_createTask(test_app, driver):
+    testDriver(test_app, driver)
+    driver.find_element_by_id("title").send_keys("Selenium is flaky")
+    driver.find_element_by_id("description").send_keys("Selenium is flaky")
+    driver.find_element_by_id("submit").click()
+
+def test_start_task(test_app, driver):
+    driver.find_element_by_xpath("//*[contains(text(),'Start')]").click()
+
+def test_reset_task(test_app, driver):
+    driver.find_element_by_xpath("//*[contains(text(),'Reset')]").click()
+
