@@ -6,15 +6,14 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
     libedit-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-    xz-utils tk-dev libffi-dev liblzma-dev python-openssl git pip3 python3-distutils
+    xz-utils tk-dev libffi-dev liblzma-dev python-openssl git python3-distutils
   
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
     echo 'PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
     echo 'PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
-    echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.profile
+    echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init --path)"\nfi' >> ~/.profile
     source ~/.profile
     pyenv install 3.8.5
-    sudo python-build 3.8.5 /usr/local/
     pyenv global 3.8.5
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
   
