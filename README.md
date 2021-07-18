@@ -60,3 +60,18 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Testing this app
+
+to run the tests, make sure you are in the todo_app folder:
+```bash
+cd .\todo_app\
+```
+And run the tests:
+```bash
+poetry run pytest
+```
+For Selenium UI tests, download Firefox and matching version of the Gecko Driver executable and place it in the root of the project. Selenium uses this under the hood to run tests on the browser.
+```bash
+poetry run pytest tests_e2e
+```
