@@ -105,8 +105,5 @@ class ItemViewModel:
     
     @property
     def should_show_all_done_items(self):
-        if (self.count_of_done_items <=5):
-            return True
-        else:
-            return False
+        return self.count_of_done_items <=5
     

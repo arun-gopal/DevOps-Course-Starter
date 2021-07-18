@@ -75,6 +75,7 @@ def test_createTask(test_app, driver):
     driver.find_element_by_id("title").send_keys("Selenium is flaky")
     driver.find_element_by_id("description").send_keys("Selenium is flaky")
     driver.find_element_by_id("submit").click()
+    driver.find_element_by_xpath("//p[contains(@class, 'card-text') and contains(text(),'Selenium is flaky')]")
 
 def test_start_task(test_app, driver):
     driver.find_element_by_xpath("//*[contains(text(),'Start')]").click()
