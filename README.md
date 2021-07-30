@@ -92,3 +92,33 @@ You can then visit http://localhost:5000/ in your web browser to view the app.
 * `vagrant provision` - Runs any VM provisioning steps specified in the Vagrantfile. Provisioning steps are one-off operations that adjust the system provided by the box.
 * `vagrant suspend` - Suspends any running VM. The VM will be restarted on the next vagrant up command.
 * `vagrant destroy` - Destroys the VM. It will be fully recreated the next time you run vagrant up.
+
+### Using Docker containers
+
+Download: 
+* Docker - you'll need to install [Docker Desktop](https://www.docker.com/products/docker-desktop).
+
+#### Running the Dev & Prod Container
+
+The dev container has two key behaviours:
+* Enables Flask's debugging/developer mode to provide detailed logging and feedback.
+* Allows rapid changes to code files without having to rebuild the image each time.
+
+The difference between the dev and prod container is that the prov container uses Gunicorn to run the app, whereas the dev container uses Flask.
+
+You can create either a development or production image from the same Dockerfile, by running the following for dev:
+```bash
+$ docker build --target development --tag todo-app:dev .
+```
+or the the following for prod:
+```bash
+$ docker build --target production --tag todo-app:prod .
+```
+You can then start the dev container by running:
+```bash
+$ docker run --env-file .env -p 5000:5000 -v $(pwd)/todo_app:/todo_app/todo_app  todo-app:dev
+```
+or you can start the prod container by running:
+```bash
+$ docker run --env-file .env -p 5000:5000 todo-app:prod
+```
