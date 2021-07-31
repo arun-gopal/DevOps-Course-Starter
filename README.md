@@ -105,3 +105,20 @@ The dev container has two key behaviours:
 * Allows rapid changes to code files without having to rebuild the image each time.
 
 The difference between the dev and prod container is that the prov container uses Gunicorn to run the app, whereas the dev container uses Flask.
+
+You can create either a development or production image from the same Dockerfile, by running the following:
+```bash
+$ docker build --target development --tag todo-app:dev .
+```
+or the the following for prod:
+```bash
+$ docker build --target production --tag todo-app:prod .
+```
+You can then start the dev container by running:
+```bash
+$ docker run --env-file .env -p 5000:5000 -v $(pwd)/todo_app:/todo_app/app  todo-app:dev
+```
+or you can start the prod container by running:
+```bash
+$ docker run --env-file .env -p 5000:5000 todo-app:prod
+```
