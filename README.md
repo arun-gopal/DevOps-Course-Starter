@@ -100,11 +100,15 @@ Download:
 
 #### Running the Dev & Prod Container
 
-The dev container has two key behaviours:
+There are two flavours of containers that can be built, a development and a production image.
+
+The dev container:
+* Uses Flask to run the application
 * Enables Flask's debugging/developer mode to provide detailed logging and feedback.
 * Allows rapid changes to code files without having to rebuild the image each time.
 
-The difference between the dev and prod container is that the prov container uses Gunicorn to run the app, whereas the dev container uses Flask.
+The production container:
+* Uses Gunicorn to run the application
 
 You can create either a development or production image from the same Dockerfile, by running the following:
 ```bash
