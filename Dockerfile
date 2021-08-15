@@ -4,16 +4,17 @@ ENV PATH="${PATH}:/root/.poetry/bin"
 
 WORKDIR /todo_app
 COPY pyproject.toml poetry.lock /todo_app/
-COPY ./todo_app /todo_app/todo_app
 
 ### PRODUCTION ###
 FROM base as production
 RUN poetry install --no-dev
+COPY ./todo_app /todo_app/todo_app
 ENTRYPOINT ["poetry", "run", "gunicorn", "-b",  "0.0.0.0:8000", "todo_app.app:create_app()"]
 EXPOSE 8000
 
 ### DEVELOPMENT ###
 FROM base as development
 RUN poetry install
+COPY ./todo_app /todo_app/todo_app
 ENTRYPOINT ["poetry", "run", "flask", "run", "-h", "0.0.0.0", "-p", "5000"]
 EXPOSE 5000

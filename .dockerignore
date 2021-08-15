@@ -6,3 +6,4 @@ Vagrantfile
 logs.txt
 .git
 .vagrant
+__pycache__
