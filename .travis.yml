@@ -5,3 +5,5 @@ before_install:
 - docker build --target test --tag todo-app:test .
 script:
 - docker run todo-app:test ./todo_app/tests
+- docker run --env-file .env todo-app:test ./todo_app/tests_e2e
+
