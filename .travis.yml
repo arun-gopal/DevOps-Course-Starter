@@ -1,2 +1,7 @@
+language: generic
+services:
+- docker
+before_install:
+- docker build --target test --tag todo-app:test .
 script:
-- echo "hello world"
+- docker run todo-app:test ./todo_app/tests
