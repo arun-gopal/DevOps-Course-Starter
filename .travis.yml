@@ -1,9 +1,8 @@
 language: generic
 services:
 - docker
-before_install:
-- docker build --target test --tag todo-app:test .
 script:
+- docker build --target test --tag todo-app:test .
 - docker run todo-app:test ./todo_app/tests
 - docker run -e TRELLO_API_KEY -e TRELLO_API_TOKEN -e FLASK_APP -e FLASK_ENV todo-app:test ./todo_app/tests_e2e
 
