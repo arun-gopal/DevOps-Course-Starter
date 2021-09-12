@@ -110,11 +110,15 @@ The dev container:
 The production container:
 * Uses Gunicorn to run the application
 
-You can create either a development or production image from the same Dockerfile, by running the following:
+You can create either a development, test or production image from the same Dockerfile, by running the following:
 ```bash
 $ docker build --target development --tag todo-app:dev .
 ```
-or the the following for prod:
+or the following for test:
+```bash
+$ docker build --target test --tag todo-app:test .
+```
+or the following for production:
 ```bash
 $ docker build --target production --tag todo-app:prod .
 ```
@@ -122,7 +126,14 @@ You can then start the dev container by running:
 ```bash
 $ docker run --env-file .env -p 5000:5000 -v $(pwd)/todo_app:/todo_app/todo_app  todo-app:dev
 ```
-or you can start the prod container by running:
+or you can start the test container by running:
+```bash
+$ docker run todo-app:test ./todo_app/tests
+```
+```bash
+$ docker run --env-file .env todo-app:test ./todo_app/tests_e2e
+```
+or you can start the production container by running:
 ```bash
 $ docker run --env-file .env -p 5000:5000 todo-app:prod
 ```
