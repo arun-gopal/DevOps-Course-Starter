@@ -35,4 +35,4 @@ jobs:
       run: docker build --target production --tag avgopal/todo-app:latest .
 
     - name: Push the image to DockerHub
-      run: docker push avgopal/todo-app:latest
+      run: docker push avgopal/todo-app
