@@ -32,7 +32,7 @@ jobs:
       run: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
 
     - name: Build the image
-      run: docker build --target production --tag avgopal/todo-app:latest .
+      run: docker build --target production --tag avgopal/todoapp:latest .
 
     - name: Push the image to DockerHub
-      run: docker push avgopal/todo-app:latest
+      run: docker push avgopal/todoapp:latest
