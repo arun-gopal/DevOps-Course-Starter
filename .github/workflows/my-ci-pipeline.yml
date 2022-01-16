@@ -13,7 +13,7 @@ jobs:
       - name: Build
         run: docker build --target test --tag todo-app:test .
 
-      - name: Tests
+      - name: Test
         run: docker run todo-app:test ./todo_app/tests
 
       - name: E2E Tests
