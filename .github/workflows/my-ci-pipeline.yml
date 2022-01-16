@@ -18,3 +18,21 @@ jobs:
 
       - name: E2E Tests
         run: docker run -e TRELLO_API_KEY -e TRELLO_API_TOKEN todo-app:test ./todo_app/tests_e2e
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to DockerHub
+      run: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
+
+    - name: Build the image
+      run: docker build --target production --tag avgopal/todo-app:latest .
+
+    - name: Push the image to DockerHub
+      run: docker push avgopal/todo-app:latest
